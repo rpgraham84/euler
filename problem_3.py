@@ -1,4 +1,5 @@
 """
+Robert Graham (rpgraham84@gmail.com)
 Project Euler
 
 Largest prime factor
