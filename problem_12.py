@@ -37,10 +37,12 @@ I then use an algorithm described on Wikipedia[2] for generating triangle number
 and iterate over them, checking to see if the number of its divisors is greater
 or equal to the number to check for, in the example, its 500.
 
+factor_tree borrowed from quora[3]...
+
 References:
 [1] https://www.wikihow.com/Find-How-Many-Factors-Are-in-a-Number
 [2] https://en.wikipedia.org/wiki/Triangular_number
-
+[3] https://www.quora.com/How-do-you-make-a-factor-tree-of-an-integer-e-g-12-or-180
 """
 from functools import reduce
 from operator import mul
@@ -58,13 +60,12 @@ def factor_tree(n: int):
     return n, None, None
 
 
-def count_factors(num: int):
-    primes = map(int, r.findall(str(factor_tree(num))))
+def count_factors(n: int):
+    primes = map(int, r.findall(str(factor_tree(n))))
     return reduce(mul, map(lambda x: x + 1, Counter(primes).values()))
 
 
-def gen_triangles():
-    n = 0
+def gen_triangles(n: int):
     while True:
         t = (n * (n + 1)) // 2
         yield t
@@ -72,10 +73,10 @@ def gen_triangles():
 
 
 def problem_12(divisors=500):
-    g = gen_triangles()
-    for t in g:
-        if count_factors(t) >= divisors:
-            return t
+    triangles = gen_triangles(divisors)
+    for triangle in triangles:
+        if count_factors(triangle) >= divisors:
+            return triangle
 
 
 if __name__ == '__main__':
