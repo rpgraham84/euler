@@ -22,21 +22,60 @@ We can see that 28 is the first triangle number to have over five divisors.
 What is the value of the first triangle number to have over five hundred divisors?
 
 Answer:
-
+76576500
 
 Rationale:
+This is a hackish but quickish approach because I use string interpolation to
+derive the prime factors from the tree of factors. I didn't want to write a
+recursive parser for the arbitrarily nested tuple output by factor_tree.
 
+So instead, I parse the prime factors from the tree and use use a nifty
+algorithm described on wikihow[1] for determining an integer's total number of
+factors.
+
+I then use an algorithm described on Wikipedia[2] for generating triangle numbers
+and iterate over them, checking to see if the number of its divisors is greater
+or equal to the number to check for, in the example, its 500.
+
+References:
+[1] https://www.wikihow.com/Find-How-Many-Factors-Are-in-a-Number
+[2] https://en.wikipedia.org/wiki/Triangular_number
 
 """
+from functools import reduce
+from operator import mul
+from collections import Counter
+import re
+
+
+r = re.compile(r'\((\d+), N')
+
+
+def factor_tree(n: int):
+    for i in range(2, n):
+        if n % i == 0:
+            return n, factor_tree(n // i), factor_tree(i)
+    return n, None, None
+
+
+def count_factors(num: int):
+    primes = map(int, r.findall(str(factor_tree(num))))
+    return reduce(mul, map(lambda x: x + 1, Counter(primes).values()))
 
 
 def gen_triangles():
+    n = 0
+    while True:
+        t = (n * (n + 1)) // 2
+        yield t
+        n += 1
 
-    yield triangle
 
-
-def problem_12():
-    pass
+def problem_12(divisors=500):
+    g = gen_triangles()
+    for t in g:
+        if count_factors(t) >= divisors:
+            return t
 
 
 if __name__ == '__main__':
