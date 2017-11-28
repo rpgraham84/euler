@@ -15,13 +15,15 @@ Answer:
 """
 
 
-def fib():
-    pass
+def fib(x=0, y=1):
+    while y <= 4_000_000:
+        x, y = y, x + y
+        if not y % 2:
+            yield y
 
 
 def problem_2():
-    fibgen = fib()
-    return sum(x for x in fib_gen)
+    return sum(fib())
 
 
 if __name__ == "__main__":
