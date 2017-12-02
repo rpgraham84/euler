@@ -34,6 +34,8 @@ def problem_30():
         if n == sum(map(lambda x: x ** 5, map(int, str(n)))):
             answer += n
 
+    return answer
+
 
 if __name__ == '__main__':
     print(problem_30())
