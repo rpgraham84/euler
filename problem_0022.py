@@ -32,11 +32,7 @@ def name_letter_value(name: str):
 
 
 def problem_22():
-    s = 0
-    for i, name in enumerate(names):
-        s += (i + 1) * name_letter_value(name)
-
-    return s
+    return sum((i + 1) * name_letter_value(name) for i, name in enumerate(names))
 
 
 if __name__ == '__main__':

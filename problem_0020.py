@@ -22,7 +22,7 @@ from math import factorial as f
 
 
 def problem_20():
-    sum(map(int, str(f(100))))
+    return sum(map(int, str(f(100))))
 
 
 if __name__ == '__main__':
