@@ -52,7 +52,7 @@ def problem_38():
                 pandigitals[(m, n)] = product
             n += 1
 
-    return sorted(pandigitals)[-1]
+    return sorted(pandigitals.values())[-1]
 
 
 if __name__ == '__main__':
