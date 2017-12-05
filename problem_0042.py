@@ -23,14 +23,19 @@ from string import ascii_uppercase
 
 
 def value_of(word: str):
-    return sum(ascii_uppercase.index(c) + 1 for c in word)
+    return sum(ascii_uppercase.index(c) + 1 for c in word.upper())
 
 
 def problem_42():
     with open("p042_words.txt") as f:
-        words = map(lambda s: s.replace("\"", ""), f.read().split(","))
+        words = [s.replace("\"", "") for s in f.read().split(",")]
 
-    triangles = [n * (n + 1) // 2 for n in range(21)]
+    n, triangles = 0, []
+    max_word = max(value_of(word) for word in words)
+    while n < max_word:
+        triangles.append(n * (n + 1) // 2)
+        n += 1
+
     return sum(1 for word in words if value_of(word) in triangles)
 
 
