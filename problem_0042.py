@@ -31,10 +31,12 @@ def problem_42():
         words = [s.replace("\"", "") for s in f.read().split(",")]
 
     n, triangles = 0, []
+    triangle = n * (n + 1) // 2
     max_word = max(value_of(word) for word in words)
-    while n < max_word:
+    while triangle < max_word:
         triangles.append(n * (n + 1) // 2)
         n += 1
+        triangle = n * (n + 1) // 2
 
     return sum(1 for word in words if value_of(word) in triangles)
 
