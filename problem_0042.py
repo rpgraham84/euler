@@ -23,29 +23,34 @@ be needed to check to see if a word is triangular or not.
 The main function returns a sum of a list with a 1 for every triangular word in
 the set of words. This counts the total number of triangular words.
 
-runtime: 7ms average
+Update:
+Cut value_of calls down by 50%, performance savings of 3-4ms ;)
+
+Update:
+Shaved another 1ms off by Removed unnecessary double calculation of triangle
+from n and using ord() instead of ascii_uppercase. Reduced line count.
+
+Runtime:
+3ms average now (previously 4)
 
 """
-from string import ascii_uppercase
 
 
 def value_of(word: str):
-    return sum(ascii_uppercase.index(c) + 1 for c in word.upper())
+    return sum(ord(c) - 64 for c in word.upper())
 
 
 def problem_42():
     with open("p042_words.txt") as f:
-        words = [s.replace("\"", "") for s in f.read().split(",")]
+        words = [value_of(s.replace("\"", "")) for s in f.read().split(",")]
 
-    n, triangles = 0, []
-    triangle = n * (n + 1) // 2
-    max_word = max(value_of(word) for word in words)
+    n, triangle, triangles, max_word = 0, 0, [], max(words)
     while triangle < max_word:
-        triangles.append(n * (n + 1) // 2)
+        triangles.append(triangle)
         n += 1
         triangle = n * (n + 1) // 2
 
-    return sum(1 for word in words if value_of(word) in triangles)
+    return sum(1 for word in words if word in triangles)
 
 
 if __name__ == '__main__':
