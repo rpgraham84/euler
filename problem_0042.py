@@ -13,10 +13,17 @@ By converting each letter in a word to a number corresponding to its alphabetica
 Using words.txt (right click and 'Save Link/Target As...'), a 16K text file containing nearly two-thousand common English words, how many are triangle words?
 
 Answer:
-
+162
 
 Rationale:
+This algorithm first checks to see what the max word value is for all of the
+words. This number is used as the maximum value of triangle number that will
+be needed to check to see if a word is triangular or not.
 
+The main function returns a sum of a list with a 1 for every triangular word in
+the set of words. This counts the total number of triangular words.
+
+runtime: 7ms average
 
 """
 from string import ascii_uppercase
