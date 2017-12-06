@@ -34,10 +34,11 @@ Runtime:
 3ms average now (previously 4)
 
 """
+from string import ascii_uppercase
 
 
 def value_of(word: str):
-    return sum(ord(c) - 64 for c in word.upper())
+    return sum(ascii_uppercase.index(c) + 1 for c in word.upper())
 
 
 def problem_42():
